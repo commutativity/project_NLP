@@ -1,0 +1,11 @@
+Daniel:
+
+Neuronales Netzwerk zur Klassifizierung
+
+
+Yannick:
+
+TfIdf Ranking Gesamt und je Branche: vergleichen 
+Thesaurus: Wörter klassifizieren: Anstatt einem Score werden nun die Branchen zugeordnet
+Klassifizierungsmethode: Methoden mit unterschiedlichen MaxDf/MinDf/neighbors etc. ausprobieren
+Mit oder ohne Lemmatisierung ausprobieren.....
