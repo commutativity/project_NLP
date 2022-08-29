@@ -65,9 +65,10 @@ Text einzugeben und ihn klassifizieren zu lassen. Es bietet die Möglichkeit, je
 
 Folgende Tabelle zeigt die besten Ergebnisse der einzelnen Klassifizierungsmethoden. 
 
-| K-Nearest Neighbor | Random Forest | Nearest Centroid | Neural Network |
-| :---:              |     :---:     |      :---:       |    :---:       |
-| 85,5 %               | 72 %          |  72 %            |  Accuracy NN    |
+|                         | K-Nearest Neighbor | Random Forest | Nearest Centroid | Neural Network |
+| :---:                   | :---:              |     :---:     |      :---:       |    :---:       |
+| rough_lemmatization     | 84,8 %             | 71,7 %        |  78,0 %          |  Accuracy NN    |
+| explicit_lemmatization  | 85,5 %             | 72,4 %        |  78,2 %          |  Accuracy NN    |
 
 Die Tabelle zeigt, dass die Cluster Methode K-Nearest Neighbor die besten Ergebnisse liefert. Hierbei sollte jedoch bedacht werden, dass das Neuronale Netzwerk aufgrund mangelnder Ressourcen nicht ausführlich trainiert werden konnte. Eine Genauigkeit von XXXX % zeigt jedoch, dass diese Methode selbst mit geringem Training eine Trefferrate liefert und durch ausreichendes Training mutmaßlich die übrigen Methoden übertreffen könnte. 
 Die binäre Klassifizierung zeigt mit XXXXX % bereits, wie präzise die Vorhersagen von Neuronalen Netzen sein können. 
