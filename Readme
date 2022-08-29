@@ -1,0 +1,44 @@
+01 Preprocessing
+
+This notebook contains the preprocessing steps. To begin with, data which is not representativ, because there are not enough instances are ommited. 
+Thereafter, the data will be lemmatized and stop words (from the Spacy Database) are beeing removed. this step takes place in two different dimensions.
+'rough_lemmatization' in the JSON file contains a simple version of lemmatization. However, after some other processing and analysis has been performed on the dataset, additional terms, or content, must be filtered. These include errors introduced by tokenization. For example, single letters from diseases such as 'Hepatitis B'. In addition, the company name was filtered from the description, which have a great influence on the classification, but have nothing to do with the actual sector.  
+This additional processed data is stored in the JSON as 'explicit_lemmatization'.
+Additionally, an extra "database" is created to be able to generate a search engine in the following steps.
+Due to the often inaccurate results, processing by means of a 'porter stemer' was omitted.
+
+02 General information about the corpus and search engine
+
+This notebook contains different metrics about the corpus. It shows the size and the distribution of the different texts.
+Additionaly, the notebook allows to search for the appearance of words. This search query can contain any number of words and the query can be optimized by using a union- or intersectional search.
+
+03 TfIdf - most relevant words of the corpus
+
+To be able to tell which words are the most relevant for each class TfIdf values are used. To do so, the vectorizer from the sklearn library is used. This vector is used to create a list with all words and their according TfIdf values. 
+The notebook offers the entry of a search query. The query can work with a single word and return the words TfIdf value, as well as the sector which the words belongs to (has highest TfIdf value in). This allows to classify a word to a sector. 
+Moreover, the TfIdf list is sorted for the highest TfIdf values and the sectors. Thereby, a list with the most relevant words of each sector is shown. This helps to determine, which words are the most important in a certain sector. 
+
+04 Classification
+
+The core of the project is the classification of a text in a certain sector. Therefor, this notebook uses the two different preprocessed datasets and three different classification methods: K-Nearest Neighbors, Random Forest and nearest Centroid.
+To be able to automate this step a class is used. This allows to create a performance measure for the two different datasets, with different classification methods and different hyperparameters of the method. 
+This notebook allows to compare the performance between the different datasets. Furthermore, the visualzation of a confusion matrix clarifies the results and allows to compare the classificaton between the different sectors. 
+
+05 Most used words with visualization
+
+To underpin the results of the notebook 03 and to learn more about the composition of the texts from the different sectors, this notebook counts the most used words for each sector. 
+This task is solved by using the Count Vectorizer from the sklearn library. 
+The following table has the form:
+
+|     Sector         |     Sector         |
+|--------------------|--------------------|.....
+| word | count value | word | count value |
+
+It shows the most important words in a descending order. The number of words shown can be adjustet. This table, in combination with the table from the notebook 03, shows how the texts of the different sectors are made up. This allows to understand which words make a text from the Energy sector a Energy text. 
+To see this visually, the notebook contains a word cloud for every sector.
+
+06 Thesaurus - Arbitrarily long texts
+
+This is another interactive notebook. Other than the thesaurus from 03, this notebook allows to enter any text and let it get classified. It offers to possibility to use any of the previously seen classification methods aswell as hyperparameters. With a maximum accuracy of ~85 % (see 03 TfIdf), this notebook provides a fairly accurate classification of the desired text.
+
+Note: All interactive notebook queries can be used by simply importing the relevant JSON data. It is not necessary to run the entire notebook.
