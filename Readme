@@ -1,4 +1,4 @@
-01 Preprocessing
+# 01 Preprocessing
 
 Dieses Notebook enthält die Vorverarbeitungsschritte. Zunächst werden Daten, die aufgrund zu weniger Instanzen nicht repräsentativ sind, aussortiert. 
 Danach werden die Daten lemmatisiert und Stoppwörter (aus der Spacy-Datenbank) entfernt. Dieser Schritt findet in zwei verschiedenen Ausmaßen statt.
