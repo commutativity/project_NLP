@@ -30,9 +30,9 @@ Um die Ergebnisse von Notebook 03 zu untermauern und mehr über die Zusammensetz
 Diese Aufgabe wird mit Hilfe des Count Vectorizer aus der Sklearn-Bibliothek gelöst. 
 Die folgende Tabelle hat die Form:
 
-|      Sektor     |      Sektor     |
-|-----------------|-----------------|.....
-| Wort | Zählwert | Wort | Zählwert |
+<p>|      Sektor     |      Sektor     |<\p>
+<p>|-----------------|-----------------|.....<\p>
+<p>| Wort | Zählwert | Wort | Zählwert |<\p>
 
 Sie zeigt die wichtigsten Wörter in absteigender Reihenfolge an. Die Anzahl der angezeigten Wörter kann variiert werden. Diese Tabelle zeigt in Kombination mit der Tabelle aus dem Notebook 03, wie sich die Texte der verschiedenen Bereiche zusammensetzen. So lässt sich nachvollziehen, welche Wörter einen Text aus dem Bereich Energie zu einem "Energietext" machen. 
 Um dies visuell zu verdeutlichen, enthält das Notebook eine Word Cloud für jeden Sektor.
