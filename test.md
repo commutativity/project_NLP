@@ -2,7 +2,7 @@
 
 Dieses Notebook enthält die Vorverarbeitungsschritte. Zunächst werden Daten, die aufgrund zu weniger Instanzen nicht repräsentativ sind, aussortiert. 
 Danach werden die Daten lemmatisiert und Stoppwörter (aus der Spacy-Datenbank) entfernt. Dieser Schritt findet in zwei verschiedenen Ausmaßen statt.
-rough_lemmatization' in der JSON-Datei enthält eine einfache Version der Lemmatisierung. Nachdem jedoch eine andere Verarbeitung und Analyse des Datensatzes durchgeführt wurde, müssen zusätzliche Begriffe oder Inhalte herausgefiltert werden. Dazu gehören Fehler, die durch die Tokenisierung entstanden sind. Zum Beispiel werden einzelne Buchstaben von Krankheiten wie "Hepatitis B" herausgefiltert. Außerdem wurden aus der Beschreibung die Firmennamen herausgefiltert, da diese einen großen Einfluss auf die Klassifizierung haben, aber nichts mit der eigentlichen Branche zu tun haben.  
+'rough_lemmatization' in der JSON-Datei enthält eine einfache Version der Lemmatisierung. Nachdem jedoch eine andere Verarbeitung und Analyse des Datensatzes durchgeführt wurde, müssen zusätzliche Begriffe oder Inhalte herausgefiltert werden. Dazu gehören Fehler, die durch die Tokenisierung entstanden sind. Zum Beispiel werden einzelne Buchstaben von Krankheiten wie "Hepatitis B" herausgefiltert. Außerdem wurden aus der Beschreibung die Firmennamen herausgefiltert, da diese einen großen Einfluss auf die Klassifizierung haben, aber nichts mit der eigentlichen Branche zu tun haben.  
 Diese zusätzlich verarbeiteten Daten werden im JSON als "explicit_lemmatization" gespeichert.
 Zusätzlich wird eine zusätzliche "Datenbank" angelegt, um in den folgenden Schritten eine Suchmaschine generieren zu können.
 Aufgrund der oft ungenauen Ergebnisse wurde auf die Verarbeitung mittels eines "Porter Stemers" verzichtet.
@@ -30,11 +30,25 @@ Um die Ergebnisse von Notebook 03 zu untermauern und mehr über die Zusammensetz
 Diese Aufgabe wird mit Hilfe des Count Vectorizer aus der Sklearn-Bibliothek gelöst. 
 Die folgende Tabelle hat die Form:
 
-<br>
-<p>|      Sektor     |      Sektor     |
-<p>|-----------------|-----------------|.....
-<p>| Wort | Zählwert | Wort | Zählwert |
-<\br>
+<table class="center">
+  <thead>
+    <tr>
+      <th colspan="2">Sektor</th>
+      <th colspan="2">Sektor</th>
+      <th colspan="2">...</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Wort</td>
+      <td>Zählwert</td>
+      <td>Wort</td>
+      <td>Zählwert</td>
+      <td>...</td>
+    </tr>
+  </tbody>
+</table>
+
 Sie zeigt die wichtigsten Wörter in absteigender Reihenfolge an. Die Anzahl der angezeigten Wörter kann variiert werden. Diese Tabelle zeigt in Kombination mit der Tabelle aus dem Notebook 03, wie sich die Texte der verschiedenen Bereiche zusammensetzen. So lässt sich nachvollziehen, welche Wörter einen Text aus dem Bereich Energie zu einem "Energietext" machen. 
 Um dies visuell zu verdeutlichen, enthält das Notebook eine Word Cloud für jeden Sektor.
 
@@ -42,5 +56,16 @@ Um dies visuell zu verdeutlichen, enthält das Notebook eine Word Cloud für jed
 
 Dies ist ein weiteres interaktives Notebook. Anders als der Thesaurus aus 03 erlaubt es dieses Notizbuch, einen beliebig langen
 Text einzugeben und ihn klassifizieren zu lassen. Es bietet die Möglichkeit, jede der zuvor gesehenen Klassifikationsmethoden sowie Hyperparameter zu verwenden. Mit einer maximalen Genauigkeit von ~85 % (siehe 03 TfIdf) liefert dieses Notebook eine ziemlich genaue Klassifizierung des gewünschten Textes.
+
+# 07 Ergebnis
+
+Folgende Tabelle zeigt die besten Ergebnisse der einzelnen Klassifizierungsmethoden. 
+
+| K-Nearest Neighbor | Random Forest | Nearest Centroid | Neural Network |
+| :---:              |     :---:     |      :---:       |    :---:       |
+| 85,5 %               | 72 %          |  72 %            |  Accuracy NN    |
+
+Die Tabelle zeigt, dass die Cluster Methode K-Nearest Neighbor die besten Ergebnisse liefert. Hierbei sollte jedoch bedacht werden, dass das Neuronale Netzwerk aufgrund mangelnder Ressourcen nicht ausführlich trainiert werden konnte. Eine Genauigkeit von XXXX % zeigt jedoch, dass diese Methode selbst mit geringem Training eine Trefferrate liefert und durch ausreichendes Training mutmaßlich die übrigen Methoden übertreffen könnte. 
+Die binäre Klassifizierung zeigt mit XXXXX % bereits, wie präzise die Vorhersagen von Neuronalen Netzen sein können. 
 
 Hinweis: Alle interaktiven Abfragen des Notizbuchs können durch einfaches Importieren der entsprechenden JSON-Daten verwendet werden. Es ist nicht notwendig, das gesamte Notebook auszuführen.
