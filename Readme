@@ -1,44 +1,45 @@
-01 Preprocessing
+# 01 Preprocessing
 
-This notebook contains the preprocessing steps. To begin with, data which is not representativ, because there are not enough instances are ommited. 
-Thereafter, the data will be lemmatized and stop words (from the Spacy Database) are beeing removed. this step takes place in two different dimensions.
-'rough_lemmatization' in the JSON file contains a simple version of lemmatization. However, after some other processing and analysis has been performed on the dataset, additional terms, or content, must be filtered. These include errors introduced by tokenization. For example, single letters from diseases such as 'Hepatitis B'. In addition, the company name was filtered from the description, which have a great influence on the classification, but have nothing to do with the actual sector.  
-This additional processed data is stored in the JSON as 'explicit_lemmatization'.
-Additionally, an extra "database" is created to be able to generate a search engine in the following steps.
-Due to the often inaccurate results, processing by means of a 'porter stemer' was omitted.
+Dieses Notebook enthält die Vorverarbeitungsschritte. Zunächst werden Daten, die aufgrund zu weniger Instanzen nicht repräsentativ sind, aussortiert. 
+Danach werden die Daten lemmatisiert und Stoppwörter (aus der Spacy-Datenbank) entfernt. Dieser Schritt findet in zwei verschiedenen Ausmaßen statt.
+rough_lemmatization' in der JSON-Datei enthält eine einfache Version der Lemmatisierung. Nachdem jedoch eine andere Verarbeitung und Analyse des Datensatzes durchgeführt wurde, müssen zusätzliche Begriffe oder Inhalte herausgefiltert werden. Dazu gehören Fehler, die durch die Tokenisierung entstanden sind. Zum Beispiel werden einzelne Buchstaben von Krankheiten wie "Hepatitis B" herausgefiltert. Außerdem wurden aus der Beschreibung die Firmennamen herausgefiltert, da diese einen großen Einfluss auf die Klassifizierung haben, aber nichts mit der eigentlichen Branche zu tun haben.  
+Diese zusätzlich verarbeiteten Daten werden im JSON als "explicit_lemmatization" gespeichert.
+Zusätzlich wird eine zusätzliche "Datenbank" angelegt, um in den folgenden Schritten eine Suchmaschine generieren zu können.
+Aufgrund der oft ungenauen Ergebnisse wurde auf die Verarbeitung mittels eines "Porter Stemers" verzichtet.
 
 02 General information about the corpus and search engine
 
-This notebook contains different metrics about the corpus. It shows the size and the distribution of the different texts.
-Additionaly, the notebook allows to search for the appearance of words. This search query can contain any number of words and the query can be optimized by using a union- or intersectional search.
+Dieses Notebook zeigt verschiedene Metriken über den Korpus. Es zeigt den Umfang und die Verteilung der verschiedenen Texte.
+Darüber hinaus ermöglicht das Notebook die Suche von Wörtern, bzw. gibt aus in welchen Texten diese vorkommen. Diese Suchabfrage kann eine beliebige Anzahl von Wörtern enthalten und die Abfrage kann durch eine Vereinigungs- oder Schnittstellensuche optimiert werden.
 
 03 TfIdf - most relevant words of the corpus
 
-To be able to tell which words are the most relevant for each class TfIdf values are used. To do so, the vectorizer from the sklearn library is used. This vector is used to create a list with all words and their according TfIdf values. 
-The notebook offers the entry of a search query. The query can work with a single word and return the words TfIdf value, as well as the sector which the words belongs to (has highest TfIdf value in). This allows to classify a word to a sector. 
-Moreover, the TfIdf list is sorted for the highest TfIdf values and the sectors. Thereby, a list with the most relevant words of each sector is shown. This helps to determine, which words are the most important in a certain sector. 
+Um feststellen zu können, welche Wörter für die einzelnen Klassen am relevantesten sind, werden TfIdf-Werte verwendet. Dazu wird der Vektorisierer aus der Sklearn-Bibliothek verwendet. Dieser Vektor wird verwendet, um eine Liste mit allen Wörtern und ihren entsprechenden TfIdf-Werten zu erstellen. 
+Das Notebook bietet die Eingabe einer Suchanfrage an. Die Abfrage kann mit einem einzelnen Wort arbeiten und den TfIdf-Wert des Wortes zurückgeben, sowie den Sektor, zu dem das Wort gehört (mit dem höchsten TfIdf-Wert). Dies ermöglicht die Zuordnung eines Wortes zu einem Sektor. 
+Außerdem wird die TfIdf-Liste nach den höchsten TfIdf-Werten und den Sektoren sortiert. Dabei wird eine Liste mit den relevantesten Wörtern eines jeden Sektors angezeigt. So lässt sich feststellen, welche Wörter in einem bestimmten Sektor am wichtigsten sind. 
 
 04 Classification
 
-The core of the project is the classification of a text in a certain sector. Therefor, this notebook uses the two different preprocessed datasets and three different classification methods: K-Nearest Neighbors, Random Forest and nearest Centroid.
-To be able to automate this step a class is used. This allows to create a performance measure for the two different datasets, with different classification methods and different hyperparameters of the method. 
-This notebook allows to compare the performance between the different datasets. Furthermore, the visualzation of a confusion matrix clarifies the results and allows to compare the classificaton between the different sectors. 
+Der Kern des Projekts ist die Einordnung eines Textes in einen bestimmten Bereich. Dazu verwendet dieses Notebook zwei unterschiedlich vorverarbeitete Datensätze und drei verschiedene Klassifizierungsmethoden: K-Nearest Neighbors, Random Forest und nearest Centroid.
+Um diesen Schritt automatisieren zu können, wird eine Klasse verwendet. Dies ermöglicht die Erstellung eines Leistungsmaßes für die beiden unterschiedlichen Datensätze, mit unterschiedlichen Klassifizierungsmethoden und unterschiedlichen Hyperparametern der Methode. 
+Dieses Notebook ermöglicht den Vergleich der Leistung zwischen den verschiedenen Datensätzen. Darüber hinaus verdeutlicht die Visualisierung einer Konfusionsmatrix die Ergebnisse und ermöglicht den Vergleich der Klassifizierung zwischen den verschiedenen Bereichen. 
 
 05 Most used words with visualization
 
-To underpin the results of the notebook 03 and to learn more about the composition of the texts from the different sectors, this notebook counts the most used words for each sector. 
-This task is solved by using the Count Vectorizer from the sklearn library. 
-The following table has the form:
+Um die Ergebnisse von Notebook 03 zu untermauern und mehr über die Zusammensetzung der Texte aus den verschiedenen Sektoren zu erfahren, zählt dieses Notebook die am häufigsten vorkommenden Wörter in jedem Sektor. 
+Diese Aufgabe wird mit Hilfe des Count Vectorizer aus der Sklearn-Bibliothek gelöst. 
+Die folgende Tabelle hat die Form:
 
-|     Sector         |     Sector         |
-|--------------------|--------------------|.....
-| word | count value | word | count value |
+|      Sektor     |      Sektor     |
+|-----------------|-----------------|.....
+| Wort | Zählwert | Wort | Zählwert |
 
-It shows the most important words in a descending order. The number of words shown can be adjustet. This table, in combination with the table from the notebook 03, shows how the texts of the different sectors are made up. This allows to understand which words make a text from the Energy sector a Energy text. 
-To see this visually, the notebook contains a word cloud for every sector.
+Sie zeigt die wichtigsten Wörter in absteigender Reihenfolge an. Die Anzahl der angezeigten Wörter kann variiert werden. Diese Tabelle zeigt in Kombination mit der Tabelle aus dem Notebook 03, wie sich die Texte der verschiedenen Bereiche zusammensetzen. So lässt sich nachvollziehen, welche Wörter einen Text aus dem Bereich Energie zu einem "Energietext" machen. 
+Um dies visuell zu verdeutlichen, enthält das Notebook eine Word Cloud für jeden Sektor.
 
 06 Thesaurus - Arbitrarily long texts
 
-This is another interactive notebook. Other than the thesaurus from 03, this notebook allows to enter any text and let it get classified. It offers to possibility to use any of the previously seen classification methods aswell as hyperparameters. With a maximum accuracy of ~85 % (see 03 TfIdf), this notebook provides a fairly accurate classification of the desired text.
+Dies ist ein weiteres interaktives Notebook. Anders als der Thesaurus aus 03 erlaubt es dieses Notizbuch, einen beliebig langen
+Text einzugeben und ihn klassifizieren zu lassen. Es bietet die Möglichkeit, jede der zuvor gesehenen Klassifikationsmethoden sowie Hyperparameter zu verwenden. Mit einer maximalen Genauigkeit von ~85 % (siehe 03 TfIdf) liefert dieses Notebook eine ziemlich genaue Klassifizierung des gewünschten Textes.
 
-Note: All interactive notebook queries can be used by simply importing the relevant JSON data. It is not necessary to run the entire notebook.
+Hinweis: Alle interaktiven Abfragen des Notizbuchs können durch einfaches Importieren der entsprechenden JSON-Daten verwendet werden. Es ist nicht notwendig, das gesamte Notebook auszuführen.
