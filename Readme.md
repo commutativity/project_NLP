@@ -84,4 +84,4 @@ Abschließend wird durch die dargestellten Ergebnisse deutlich, dass eine geeign
 
 
 
-Hinweis: Alle interaktiven Abfragen des Notizbuchs können durch einfaches Importieren der entsprechenden JSON-Daten verwendet werden. Es ist nicht notwendig, das gesamte Notebook auszuführen.
+Hinweis: Die Verarbeitung einiger Zellen in den Notebooks kann viel Zeit in Anspruch nehmen. Für die Interaktive Nutzung der Notebooks wurden daher einzelne Dateien mit den nötigen Inhalten erstellt. Alle interaktiven Abfragen der Notebooks können durch einfaches Importieren der entsprechenden JSON-Daten verwendet werden. Es ist nicht notwendig, das Notebook vollständig auszuführen.
