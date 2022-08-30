@@ -61,16 +61,27 @@ Um dies visuell zu verdeutlichen, enthält das Notebook eine Word Cloud für jed
 Dies ist ein weiteres interaktives Notebook. Anders als der Thesaurus aus 03 erlaubt es dieses Notizbuch, einen beliebig langen
 Text einzugeben und ihn klassifizieren zu lassen. Es bietet die Möglichkeit, jede der zuvor gesehenen Klassifikationsmethoden sowie Hyperparameter zu verwenden. Mit einer maximalen Genauigkeit von ~85 % (siehe 03 TfIdf) liefert dieses Notebook eine ziemlich genaue Klassifizierung des gewünschten Textes.
 
-## 07 Ergebnis
+# Ergebnis
 
-Folgende Tabelle zeigt die besten Ergebnisse der einzelnen Klassifizierungsmethoden. 
+Folgende Tabellen zeigen die Ergebnisse der einzelnen Klassifizierungsmethoden. 
 
-|                         | K-Nearest Neighbor | Random Forest | Nearest Centroid | Neural Network |
-| :---:                   | :---:              |     :---:     |      :---:       |    :---:       |
-| rough_lemmatization     | 84,8 %             | 71,7 %        |  78,0 %          |  Accuracy NN    |
-| explicit_lemmatization  | 85,5 %             | 72,4 %        |  78,2 %          |  Accuracy NN    |
+|                         | K-Nearest Neighbor | Random Forest | Nearest Centroid |
+| :---:                   | :---:              |     :---:     |      :---:       |
+| rough_lemmatization     | 84,8 %             | 71,7 %        |  78,0 %          |
+| explicit_lemmatization  | 85,5 %             | 72,4 %        |  78,2 %          |
 
-Die Tabelle zeigt, dass die Cluster Methode K-Nearest Neighbor die besten Ergebnisse liefert. Hierbei sollte jedoch bedacht werden, dass das Neuronale Netzwerk aufgrund mangelnder Ressourcen nicht ausführlich trainiert werden konnte. Eine Genauigkeit von XXXX % zeigt jedoch, dass diese Methode selbst mit geringem Training eine Trefferrate liefert und durch ausreichendes Training mutmaßlich die übrigen Methoden übertreffen könnte. 
-Die binäre Klassifizierung zeigt mit XXXXX % bereits, wie präzise die Vorhersagen von Neuronalen Netzen sein können. 
+Die Tabelle zeigt, dass die Cluster Methode K-Nearest Neighbor unter der erweiterten Vorverarbeitung die besten Ergebnisse liefert. Hierbei sollte jedoch bedacht werden, dass das Neuronale Netzwerk aufgrund mangelnder Ressourcen nicht ausführlich trainiert werden konnte. Eine Genauigkeit von 83,0 % mit einer vortrainierten Basis (wie in Tabelle 2 dargestellt) zeigt jedoch, dass diese Methode selbst mit geringem Training eine hohe Trefferrate liefert und durch ausreichendes Training mutmaßlich die übrigen Methoden übertreffen könnte. Weitere Informationen und Einzelheiten zu den neuronalen Netzen können der Beschreibung in HIER NOCH ORDNERNAME ORDNER 1 EINFÜGEN entnommen werden. 
+
+|                                                 | raw descriptions | Descriptions without stopwords and lemmatized |
+|                 :---                            | :---:            | :---:                                         |
+| Sector classification with LSTM layer           | 61,9 %           | 65,8 %                                        |
+| Sector classification with pretrained tokenizer | 78,6 %           | 83,0 %                                        |
+| Binary classification                           | 98,8 % %         | 99,0 %                                        |
+
+Die binäre Klassifizierung zeigt mit 99,0 % bereits, wie präzise Vorhersagen von Neuronalen Netzen sein können. 
+
+Abschließend wird durch die dargestellten Ergebnisse deutlich, dass eine geeignete Vorverarbeitung der zugrundeliegenden Daten die Ergebnisse teilweise deutlich optimieren kann. 
+
+
 
 Hinweis: Alle interaktiven Abfragen des Notizbuchs können durch einfaches Importieren der entsprechenden JSON-Daten verwendet werden. Es ist nicht notwendig, das gesamte Notebook auszuführen.
