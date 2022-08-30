@@ -9,10 +9,11 @@ Dazu sollen verschiedene Modelle antrainiert und schließlich das Modell mit der
 
 ## Erklärung zu den erstellten Dateien
 
-Ordner 1 enthält die Spezifikationen des Projekts. Ordner 2 enthält CSV, TXT und JSON Dateien die Ticker (Symbole) der Börsen AMEX, NASDAQ, NYSE, FSE, London SE, Bolsa de Madrid, Tokyo SE und Toronto SE. 
+In dem ersten Ordner sind die Spezifikationen des Projekts abgelegt. 
+Ordner 2 enthält CSV, TXT und JSON-Dateien welche Ticker (Symbole) der betrachteten Börsen AMEX, NASDAQ, NYSE, FSE, London SE, Bolsa de Madrid, Tokyo SE und Toronto SE beinhalten. 
 Diese Ticker werden anschließend verwendet, um Unternehmensbeschreibungen von Yahoo Finance herunterzuladen. 
-Die Dateien in Ordner 2 wurden mithilfe der folgenden Links heruntergeladen bzw. die Börsen AMEX, NASDAQ und NYSE wurden mit einem Skript extrahiert.
-Dieses Skript steht zusammen mit den anderen heruntergeladenen Dateien in Ordner 2 zur Verfügung. 
+Dazu werden die Ticker in einer entsprechenden URL von Yahoo Finance zusammen mit einer Länderabkürzung eingefügt.
+Die Dateien in Ordner 2 wurden mithilfe der folgenden Links heruntergeladen bzw. die Börsen AMEX, NASDAQ und NYSE wurden mit einem Skript extrahiert, das ebenfalls im Ordner zur Verfügung steht.
 
 
 - NASDAQ Tickers: https://www.advfn.com/nasdaq/nasdaq.asp?companies=
@@ -27,35 +28,36 @@ Dieses Skript steht zusammen mit den anderen heruntergeladenen Dateien in Ordner
 
 Das Notebook 3 läd die Unternehmensbeschreibungen von Yahoo Finance herunter. Dazu wird jede Liste in Ordner 2 eingelesen und separat heruntergeladen. 
 Dieses separate Herunterladen wurde verwendet, da es weniger anfällig gegenüber Verbindungsproblemen ist.
-Die heruntergeladenen JSON-Dateien werden in Ordner 4 gespeichert.
-Am Ende des Notebooks 3 werden alle JSON-Dateien in Ordner 4 eingelesen und in einer JSON-Datei konsolidiert. 
-Diese Datei trägt den Namen "data_raw.json" und sie enthält 9856 Einträge.
+Die heruntergeladenen JSON-Dateien werden schließlich in Ordner 4 gespeichert.
+Am Ende des Notebooks 3 werden alle JSON-Dateien in Ordner 4 eingelesen und in einer einzigen JSON-Datei konsolidiert. 
+Diese Datei "data_raw.json" befindet sich außerhalb aller Ordner und sie enthält 9856 Einträge.
 
 
-Das Notebook 5 nimmt eine Datenbereinigung und -konsolidierung vor. Beispielsweise werden Unternehmenssektoren mit geringer Anzahl größeren zugeordnet. 
+Das Notebook 5 nimmt eine Datenbereinigung und -konsolidierung vor. Beispielsweise werden Unternehmenssektoren mit geringer Anzahl an Sektoren mit einer höheren Anzahl zugeordnet. 
 Am Ende werden die verarbeiteten Daten in JSON-Datei "data_prep.json" gespeichert. Zur Übersicht: 9833 Unternehmensbeschreibungen verbleiben am Ende, die in 10 Sektoren eingeteilt sind. 
 
 ### Vergleich synchrones und asynchrones Skript zur Datenextraktion
 
-Ordner 6 vergleicht zwei Methoden zur Datenbeschaffung. Dieser Vergleich ist nicht in der Projektspezifikation erwähnt, wurde allerdings gemacht, da am Ende des Projektes noch Ressourcen hierfür frei waren.
-Die erste Methode ist ein synchrones Skript, das wie das Skript in Notebook 3 arbeitet. 
+Ordner 6 vergleicht zwei Methoden zur Datenbeschaffung. Dieser Vergleich ist nicht in der Projektspezifikation erwähnt, wurde allerdings durchgeführt, da am Ende des Projektes noch Ressourcen hierfür frei waren.
+Die erste betrachtete Methode ist ein synchrones Skript, welches wie das Skript in Notebook 3 arbeitet. 
 Die zweite Methode ein asynchrones Skript, das mithilfe der Libraries "Asyncio" und "Aiohttp" arbeitet.
-Im Vergleich werden die Unternehmensbeschreibungen der Börse AMEX heruntergeladen.
-Grund für diese Performanceverbesserung liegt in dem Connection-Sharing von Aiohttp und dem gleichzeiten Anfragen von Requests an Yahoo Finance.
-Während eine Seite geladen wird, werden automatisch weitere Seiten angefragt. Diese gleichzeitigen Anfragen senkt erheblich die Dauer des Data Retrievals.
+Im Vergleich werden die Unternehmensbeschreibungen der Börse AMEX heruntergeladen, während die Laufzeit gemessen wird.
+Im Abschnitt Ergebnisse werden die Laufzeiten vorgestellt und verglichen.
 
 ### Neuronale Netze
 
 Ordner 7 enthält die neuronalen Netze, die für die Klassifizierung erstellt wurden. 
 Beim Erstellen der neuronalen Netze wurde darauf geachtet, dass die Trainings-, Validierungs- und Testdatensätze gleichmäßig verteilt sind bezüglich ihrer Anzahl an Sektoren (stratified sampling).
-Die Aufteilung der Samples ist auf 80 % Trainings-Datensatz, 10 % Validierungs- und Test-Datensatz gelegt.
-Notebook 1 betrachtet nur einen Sektor und versucht zu bestimmen, ob das betrachtete Unternehmen zu diesem Sektor gehört oder nicht. 
-Der betrachtete Sektor ist hierbei der Financial Services Sektor. In Notebook 1 wird zunächst ein neuronales Netz mit den normalen Unternehmensbeschreibungen aus dem Datensatz "data_prep.json" antrainiert.
+Die Samples wurden in 80 % Trainings-Datensatz, 10 % Validierungs- und Test-Datensatz verteilt.
+Notebook 1 betrachtet nur einen Sektor und versucht zu bestimmen, ob das betrachtete Unternehmen zu diesem Sektor gehört oder nicht (binäre Klassifizierung). 
+Der betrachtete Sektor ist hierbei der Financial Services Sektor, da dieser über die meisten Werte verfügt. 
+In Notebook 1 wird zunächst ein neuronales Netz mit den normalen Unternehmensbeschreibungen aus dem Datensatz "data_prep.json" antrainiert.
 Anschließend wird ein weiteres neuronales Netz mit dem bereinigten und lemmatisierten Datensatz antrainiert.
+Die Performanceverbesserung von den normalen Beschreibungen auf die lemmatisierten und gefilterten Beschreibungen (Stoppwörter) wird im Abschnitt Ergebnis behandelt.
 
 
-Notebook 2 nimmt alle Sektoren zur Hand und versucht diese den Unternehmensbeschreibungen zuzuordnen. 
-Die neuronalen Netze in Notebook 2 arbeiten mit einem vortrainierten Eingangslayer, der gleichzeitig ein token-based text embedding vornimmt.
+Notebook 2 nimmt alle Sektoren zur Hand und versucht diese den Unternehmensbeschreibungen zuzuordnen (Sektor-Klassifizierung). 
+Die neuronalen Netze in Notebook 2 arbeiten mit einem vortrainierten Eingangslayer, der gleichzeitig ein "token-based text embedding" vornimmt.
 Anschließend wird, wie in Notebook 1, ein neuronales Netz mit dem Datensatz "data_prep.json" und dem lemmatisierten Datensatz "Unternehmen_preprocessed.json" antrainiert.
 
 
@@ -70,9 +72,11 @@ Wieder werden zwei Modelle anhand der zwei Datensätze antrainiert und bewertet.
 
 
 Das Data Retrieval funktioniert mit einem asynchrones Skript wesentlich schneller. 
+Grund für diese Performanceverbesserung liegt in dem Connection-Sharing von Aiohttp und dem gleichzeiten Anfragen von Requests an Yahoo Finance.
+Während eine Seite geladen wird, werden automatisch weitere Seiten angefragt. Diese gleichzeitigen Anfragen senkt erheblich die Dauer des Data Retrievals.
 Interessanterweise scheitert beim asynchronen Skript ein Request der 717 gestellten auch nach mehrmaliger Ausführung und es verbleiben 286 erfolgreiche Requests. 
-Vermutlich braucht dieser Request zu lange zu laden, da es bei dem asynchronen Skript mit Pausen (moderaten Stellen von Requests) beinhaltet ist.
-Dieses moderatere Stellen von Requests wird bereits bei einer Pause von 0,1 Sekunden zwischen den Requests erreicht. 
+Vermutlich braucht dieser Request zu lange zu laden, da er bei dem asynchronen Skript mit Pausen beinhaltet ist.
+Dieses Skript mit Pausen wartet 0,1 Sekunden bevor es den nächsten Request stellt. Das asynchrone Skript mit Pausen bietet die beste Möglichkeit, Daten von Yahoo Finance zu extrahieren.
 
 | Data retrieval                | Synchronous Programming | Asynchronous Programming |      Asynchronous with breaks of 0.1 seconds       |
 |:------------------------------|:-----------------------:|:------------------------:|:--------------------------------------------------:|
@@ -94,8 +98,8 @@ Die folgenden Tabellen zeigen die Ergebnisse der einzelnen Klassifizierungsmetho
 Die binäre Klassifizierung kann nicht mit den anderen Methoden verglichen werden. 
 Sie zeigt allerdings, dass neuronale Netze imstande sind, sehr gute Genauigkeiten zu erreichen. 
 Bei der Sektor-Klassifizierung schneidet das Model mit einem vortrainierten Layer und Tokenizer am besten ab. 
-Wird kein vortrainiertes Modell verwendet, ist die Datenmenge zu wenig, um das neuronale Netz ausreichend für eine Sektor-Klassifizierung zu trainieren. 
-Auch der LSTM Layer führt hierbei zu keiner signifikaten Verbesserung.
+Wird kein vortrainiertes Modell verwendet, ist die Datenmenge zu gering, um ein neuronales Netz ausreichend für eine Sektor-Klassifizierung zu trainieren. 
+Auch der LSTM Layer führt hierbei zu keiner signifikaten Performance Verbesserung.
 
 | Accuracy scores on test dataset                   | Binary classification |
 |:--------------------------------------------------|:---------------------:|
@@ -110,5 +114,5 @@ Auch der LSTM Layer führt hierbei zu keiner signifikaten Verbesserung.
 
 
 
-Die Cluster Methode K-Nearest Neighbor liefert unter der erweiterten Vorverarbeitung die höchste Genauigkeit. 
+Als Ergebnis kann formuliert werden, dass die Cluster Methode K-Nearest Neighbor unter der erweiterten Vorverarbeitung (Filtern von Stoppwörtern und Lemmatisierung) die höchste Genauigkeit liefert. 
 Damit kann die Problemfrage aus der Projektspezifikation mit der K-Nearest Neighbor Methode mit einer Genauigkeit von 85,5 % beantwortet werden.
