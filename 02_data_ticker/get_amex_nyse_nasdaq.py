@@ -30,14 +30,16 @@ for exchange in exchanges:
             row = i.find_all('td')
             company_name.append(row[0].text.strip())    # company name
             company_ticker.append(row[1].text.strip())  # ticker
+            print(row[1].text.strip())
 
         for i in even_rows:
             row = i.find_all('td')
             company_name.append(row[0].text.strip())    # company name
             company_ticker.append(row[1].text.strip())  # ticker
+            print(row[1].text.strip())
 
     data['name'] = company_name
     data['ticker'] = company_ticker
 
     info = exchange['exchange']
-    data.to_json(f'data_ticker/{info}.json', orient='values')
+    data.to_json(f'{info}.json', orient='values')
