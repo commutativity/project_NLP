@@ -52,20 +52,9 @@ Beim Erstellen der neuronalen Netze wurde darauf geachtet das die Trainings-, Va
 Notebook 2 arbeitet mit einem vortrainierten Eingangslayer, der gleichzeitig ein token-based text embedding vornimmt. 
 Notebook 3 verwendet kein vortrainiertes Netz und einen Long Short-Term Memory (LSTM) Layer. Dieser wird als Kurzzeitgedächtnis des Models verwendet. 
 
-### Ergebnisse der Klassifizierungen
+# Ergebnisse
 
-Die Datenmenge reicht für die binäre Klassifizierung gut aus, da hier hohe Accuracy Scores erreicht werden. 
-Für die Klassifizierung von Unternehmensbeschreibung zu Sektor reicht der Datensatz aus, wenn ein vortrainiertes Modell verwendet wird (vergl. Notebook 2). 
-Wenn ohne vortrainiertes Modell gearbeitet wird, dann ist die Datenmenge zu wenig. Auch ein LSTM Layer führte zu keiner signifikaten Verbesserung.
-
-| Accuracy scores on test dataset                 | Descriptions | Descriptions without stopwords and lemmatized |
-|:------------------------------------------------|:------------:|:---------------------------------------------:|
-| Binary classification                           |    0.9878    |                    0.9908                     | 
-| Sector classification with pretrained tokenizer |    0.7862    |                    0.8308                     |
-| Sector classification with LSTM layer           |    0.6191    |                    0.6575                     |
-
-
-### Ergebnisse zum Data Retrieval
+## Data Retrieval
 
 Das Data Retrieval funktioniert mit einem asynchrones Skript wesentlich schneller. 
 Interessanterweise scheitert beim asynchronen Skript ein Request der 717 gestellten auch nach mehrmaliger Ausführung. 
@@ -77,3 +66,26 @@ Dieses moderatere Stellen von Requests wird bereits bei einer Pause von 0,1 Seku
 | Duration                      |       996 seconds       |        25 seconds        |                     72 seconds                     |
 | Number of scraped requests    |      717 requests       |       717 requests       |                    717 requests                    |
 | Number of successful requests |      287 requests       |       286 requests       |                    287 requests                    | 
+
+
+## Klassifizierung
+
+Folgende Tabellen zeigen die Ergebnisse der einzelnen Klassifizierungsmethoden. 
+
+|                         | K-Nearest Neighbor | Random Forest | Nearest Centroid |
+| :---:                   | :---:              |     :---:     |      :---:       |
+| rough_lemmatization     | 84,8 %             | 71,7 %        |  78,0 %          |
+| explicit_lemmatization  | 85,5 %             | 72,4 %        |  78,2 %          |
+
+Die Tabelle zeigt, dass die Cluster Methode K-Nearest Neighbor unter der erweiterten Vorverarbeitung die besten Ergebnisse liefert. 
+Die Cluster Methode K-Nearest Neighbor würden wir für eine Klassifizierung verwenden. 
+Die binäre Klassifizierung kann nicht mit den anderen Methoden verglichen werden. Sie zeigt allerdings, dass neuronale Netze imstande sind, sehr Accuracy Scores zu erreichen. 
+Müsste man nur zwischen neuronalen Netzen entscheiden, so schneided die Sektor Klassifizierung mit einem vortrainierten Model am besten ab. 
+Wird kein vortrainiertes Modell verwendet, ist die Datenmenge zu wenig, um das neuronale Netz ausreichend für eine Sektor Klassifizierung zu trainieren. Auch ein LSTM Layer führt hierbei zu keiner signifikaten Verbesserung.
+
+
+| Accuracy scores on test dataset                 | Descriptions | Descriptions without stopwords and lemmatized |
+|:------------------------------------------------|:------------:|:---------------------------------------------:|
+| Binary classification                           |    0.9878    |                    0.9908                     | 
+| Sector classification with pretrained tokenizer |    0.7862    |                    0.8308                     |
+| Sector classification with LSTM layer           |    0.6191    |                    0.6575                     |
