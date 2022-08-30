@@ -1,12 +1,12 @@
-## Projektarbeit Klassifizierung von Unternehmensbeschreibungen
+# Projektarbeit Klassifizierung von Unternehmensbeschreibungen
 
-### Projektbeschreibung
+## Projektbeschreibung
 Die Plattform Yahoo Finance verfügt über eine Vielzahl von Informationen zu an der Börse gelisteter Unternehmen. 
 Beispielsweise bietet die Plattform für jedes Unternehmen eine eigene Seite mit Unternehmensdaten und einer Beschreibung an. 
 Ziel dieser Projektarbeit soll es sein, mithilfe der Unternehmensbeschreibungen eine Klassifizierung des jeweiligen Sektors des Unternehmens vorzunehmen. 
 Dazu sollen verschiedene Modelle antrainiert und schließlich das Modell mit der höchsten Genauigkeit bestimmt werden.
 
-### Erklärung zu den erstellten Dateien
+## Erklärung zu den erstellten Dateien
 Ordner 1 erhält die Projektspezifikationen. Ordner 2 enthält CSV, TXT und JSON Dateien die Ticker von an Börsen gelisteter Unternehmen aufzählen. 
 Diese Ticker werden anschließend verwendet, um Unternehmensbeschreibungen auf Yahoo Finance herunterzuladen. 
 Die Dateien, die Tickerinformationen zu den Börsen enthalten, wurden von folgenden Links heruntergeladen. 
@@ -77,11 +77,14 @@ Folgende Tabellen zeigen die Ergebnisse der einzelnen Klassifizierungsmethoden.
 | rough_lemmatization     | 84,8 %             | 71,7 %        |  78,0 %          |
 | explicit_lemmatization  | 85,5 %             | 72,4 %        |  78,2 %          |
 
-Die Tabelle zeigt, dass die Cluster Methode K-Nearest Neighbor unter der erweiterten Vorverarbeitung die besten Ergebnisse liefert. 
-Die Cluster Methode K-Nearest Neighbor würden wir für eine Klassifizierung verwenden. 
-Die binäre Klassifizierung kann nicht mit den anderen Methoden verglichen werden. Sie zeigt allerdings, dass neuronale Netze imstande sind, sehr Accuracy Scores zu erreichen. 
-Müsste man nur zwischen neuronalen Netzen entscheiden, so schneided die Sektor Klassifizierung mit einem vortrainierten Model am besten ab. 
-Wird kein vortrainiertes Modell verwendet, ist die Datenmenge zu wenig, um das neuronale Netz ausreichend für eine Sektor Klassifizierung zu trainieren. Auch ein LSTM Layer führt hierbei zu keiner signifikaten Verbesserung.
+Die Tabelle zeigt, dass die Cluster Methode K-Nearest Neighbor unter der erweiterten Vorverarbeitung die besten Ergebnisse liefert und diese Methode würden wir für eine Implementierung verwenden. 
+
+
+Die binäre Klassifizierung in der Tabelle zu den neuronalen Netzen kann nicht mit den anderen Methoden verglichen werden. 
+Sie zeigt allerdings, dass neuronale Netze imstande sind, sehr gute Accuracy Scores zu erreichen. 
+Könnte man nur aus den Optionen an neuronalen Netzen entscheiden, so schneidet die Sektor-Klassifizierung mit einem vortrainierten Model am besten ab. 
+Wird kein vortrainiertes Modell verwendet, ist die Datenmenge zu wenig, um das neuronale Netz ausreichend für eine Sektor-Klassifizierung zu trainieren. 
+Auch ein LSTM Layer führt hierbei zu keiner signifikaten Verbesserung.
 
 
 | Accuracy scores on test dataset                 | Descriptions | Descriptions without stopwords and lemmatized |
