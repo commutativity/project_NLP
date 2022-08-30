@@ -1,5 +1,7 @@
 # Projektarbeit Klassifizierung von Unternehmensbeschreibungen
 
+Daniel Gauermann (71411) & Yannick Maurer (68036)
+
 Die folgende Readme Datei enthält eine kurze Beschreibung der im Ordner enthaltenen Notebooks. Außerdem werden hier die Ergebnisse der einzelnen Notebooks kurz zusammen gefasst. 
 
 ## 01 Preprocessing
