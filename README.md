@@ -1,5 +1,7 @@
 # Projektarbeit Klassifizierung von Unternehmensbeschreibungen
 
+Yannick Maurer (68036) & Daniel Gauermann (71411)
+
 ## Projektbeschreibung
 
 Die Plattform Yahoo Finance verfügt über eine Vielzahl von Informationen zu an der Börse gelisteter Unternehmen. 
