@@ -110,5 +110,5 @@ Auch der LSTM Layer führt hierbei zu keiner signifikaten Verbesserung.
 
 
 
-Die Cluster Methode K-Nearest Neighbor liefert unter der erweiterten Vorverarbeitung die höchsten Genauigkeiten. 
+Die Cluster Methode K-Nearest Neighbor liefert unter der erweiterten Vorverarbeitung die höchste Genauigkeit. 
 Damit kann die Problemfrage aus der Projektspezifikation mit der K-Nearest Neighbor Methode mit einer Genauigkeit von 85,5 % beantwortet werden.
