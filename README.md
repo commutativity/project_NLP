@@ -25,25 +25,55 @@ Das Script steht ebenfalls im Ordner 2 zur Verfügung. In Ordner 2 sind ansonste
 
 
 Das Notebook 3 läd die Unternehmensbeschreibungen herunter. Dazu wird jede Liste in Ordner 2 eingelesen und separat heruntergeladen. 
-Dieses separate Herunterladen wurde verwendet, da es weniger anfällig gegenüber Verbindungsproblemen ist. 
-Die einzelnen JSON Dateien der Börsen werden ebenfalls in dem Script konsolidiert. 
-Die JSON-Datei mit Nummer 4 ist das finale Produkt des Notebooks 3 (Information Retrieval). 
+Dieses separate Herunterladen wurde verwendet, da es weniger anfällig gegenüber Verbindungsproblemen ist.
+Die heruntergeladenen JSON-Dateien werden in Ordner 4 gespeichert.
+Am Ende des Notebooks 3 werden alle JSON-Dateien in Ordner 4 eingelesen und in einer JSON-Datei konsolidiert. 
+Diese Datei trägt den Namen "data_raw.json" und sie enthält 9856 Einträge.
 
 
 Das Notebook 5 nimmt eine Datenbereinigung und -konsolidierung vor. Beispielsweise werden Unternehmenssektoren die zu wenig vorkommen zu anderen hinzugefügt. 
-Am Ende werden die verarbeiteten Daten in JSON-Datei 6 gespeichert. Zur Übersicht: 9833 Unternehmensbeschreibungen verbleiben am Ende, die in 10 Sektoren eingeteilt sind. 
+Am Ende werden die verarbeiteten Daten in JSON-Datei "data_prep.json" gespeichert. Zur Übersicht: 9833 Unternehmensbeschreibungen verbleiben am Ende, die in 10 Sektoren eingeteilt sind. 
 
 
-Ordner 7 vergleicht zwei Methoden zur Datenbeschaffung. Die erste Methode ist ein synchrones Skript. Die zweite Methode ein asynchrones Skript, mithilfe der Library "Asyncio" und "Aiohttp".
+Ordner 6 vergleicht zwei Methoden zur Datenbeschaffung. Die erste Methode ist ein synchrones Skript. 
+Die zweite Methode ein asynchrones Skript, das mithilfe der Libraries "Asyncio" und "Aiohttp" arbeitet.
 Im Vergleich werden die Unternehmensbeschreibungen der Börse AMEX heruntergeladen. Datei benötigt das synchrone Skript 16 Minuten und 36 Sekunden. 
 Das asynchrone Skript benötigt für die gleiche Datenmenge gerade einmal 25 Sekunden (vergl. 2 Screenshots in diesem Ordner). 
-Grund für diese Performanceverbesserung liegt in dem Connection-Sharing von Aiohttp und dem gleichzeiten Stellen von Requests an Yahoo Finance. 
+Grund für diese Performanceverbesserung liegt in dem Connection-Sharing von Aiohttp und dem gleichzeiten Anfragen von Requests an Yahoo Finance.
+Während eine Seite geladen wird, werden automatisch weitere Seiten angefragt. Diese gleichzeitigen Anfragen erhöhen erheblich die Dauer des Data Retrievals.
 
 
-Ordner 8 enthält die neuronalen Netze, die für die Klassifizierung erstellt wurden. 
-Das erste neuronale Netz betrachtet nur einen Sektor und versucht zu bestimmen, ob das betrachtete Unternehmen zu diesem Sektor gehört oder nicht.
-Das zweite neuronale Netz nimmt alle Sektoren zur Hand und versucht diese den Unternehmensbeschreibungen zuzuordnen. 
-Beim Erstellen der neuronalen Netze wurde darauf geachtet das die Trainings-, Validierungs- und Testdatensätze gleichmäßig verteilt sind in ihrer Anzahl an Sektoren. 
+Ordner 7 enthält die neuronalen Netze, die für die Klassifizierung erstellt wurden. 
+Notebook 1 betrachtet nur einen Sektor und versucht zu bestimmen, ob das betrachtete Unternehmen zu diesem Sektor gehört oder nicht. 
+Der betrachtete Sektor ist hierbei der Financial Service Sektor. 
+Notebook 2 nimmt alle Sektoren zur Hand und versucht diese den Unternehmensbeschreibungen zuzuordnen. 
+Beim Erstellen der neuronalen Netze wurde darauf geachtet das die Trainings-, Validierungs- und Testdatensätze gleichmäßig verteilt sind in ihrer Anzahl an Sektoren 
+(stratified sampling). Die Aufteilung der Samples ist auf 80 % Trainings-Datensatz, 10 % Validierungs- und Test-Datensatz gelegt.
+Notebook 2 arbeitet mit einem vortrainierten Eingangslayer, der gleichzeitig ein token-based text embedding vornimmt. 
+Notebook 3 verwendet kein vortrainiertes Netz und einen Long Short-Term Memory (LSTM) Layer. Dieser wird als Kurzzeitgedächtnis des Models verwendet. 
+
+### Ergebnisse der Klassifizierungen
+
+Die Datenmenge reicht für die binäre Klassifizierung gut aus, da hier hohe Accuracy Scores erreicht werden. 
+Für die Klassifizierung von Unternehmensbeschreibung zu Sektor reicht der Datensatz aus, wenn ein vortrainiertes Modell verwendet wird (vergl. Notebook 2). 
+Wenn ohne vortrainiertes Modell gearbeitet wird, dann ist die Datenmenge zu wenig. Auch ein LSTM Layer führte zu keiner signifikaten Verbesserung.
+
+| Accuracy scores on test dataset                 | Descriptions | Descriptions without stopwords and lemmatized |
+|:------------------------------------------------|:------------:|:---------------------------------------------:|
+| Binary classification                           |    0.9878    |                    0.9908                     | 
+| Sector classification with pretrained tokenizer |    0.7862    |                    0.8308                     |
+| Sector classification with LSTM layer           |    0.6191    |                    0.6575                     |
 
 
-Das finale Notebook 9 nimmt eine Thema-Modellierung vor. Diese Thema-Modellierung bestimmt welche Anzahl an Sektoren optimal wäre.
+### Ergebnisse zum Data Retrieval
+
+Das Data Retrieval funktioniert mit einem asynchrones Skript wesentlich schneller. 
+Interessanterweise scheitert beim asynchronen Skript ein Request der 717 gestellten auch nach mehrmaliger Ausführung. 
+Vermutlich braucht dieses zu lange zu laden, da es bei einem moderaten Stellen von Requests beinhaltet ist.
+Dieses moderatere Stellen von Requests wird bereits bei einer Pause von 0,1 Sekunden zwischen den Requests erreicht. 
+
+| Data retrieval                | Synchronous Programming | Asynchronous Programming |      Asynchronous with breaks of 0.1 seconds       |
+|:------------------------------|:-----------------------:|:------------------------:|:--------------------------------------------------:|
+| Duration                      |       996 seconds       |        25 seconds        |                     72 seconds                     |
+| Number of scraped requests    |      717 requests       |       717 requests       |                    717 requests                    |
+| Number of successful requests |      287 requests       |       286 requests       |                    287 requests                    | 
